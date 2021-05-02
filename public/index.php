@@ -11,7 +11,7 @@
     use App\core\Application;
 
     $application = new Application();
-
+ 
     $application->run();
 
 

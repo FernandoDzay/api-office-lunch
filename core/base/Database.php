@@ -13,8 +13,10 @@
         private $db;
 
         public function __construct() {
-            $this->setParameters();
-            $this->setConnexion();
+            if($this->isBackendApi()) {
+                $this->setParameters();
+                $this->setConnexion();
+            }
         }
 
 
@@ -61,6 +63,9 @@
                 echo 'Falló la conexión: ' . $e->getMessage();
                 die();
             }
+        }
+        private function isBackendApi() {
+            return Config::getBackendApi();
         }
 
 

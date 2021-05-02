@@ -16,15 +16,7 @@ class Router {
         }
     }
 
-    /* public function getRoute($url) {
-        $rules = Config::getRules();
-        foreach($rules as $i => $rule) {
-            if($rule['pattern'] == $url) {
-                return $rule['route'];
-            }
-        }
-        return false;
-    } */
+
 
     public function getRequestRule($rules, $url) {
         foreach($rules as $i => $rule) {
