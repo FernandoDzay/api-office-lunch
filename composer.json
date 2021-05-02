@@ -1,0 +1,9 @@
+{
+    "name": "coding/office-lunch-platform",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "./"
+        }
+    }
+}
