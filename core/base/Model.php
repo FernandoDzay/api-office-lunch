@@ -6,7 +6,7 @@
 
     class Model {
 
-        private array $tableColumns;
+        public array $tableColumns;
         private $tableName;
         private $baseColumn;
 
@@ -24,6 +24,9 @@
                     $this->setProperties($params);
                 }
             }
+            if(method_exists($this, "my_construct")) {
+                $this->my_construct();
+            }
  
         }
 
@@ -38,6 +41,7 @@
                 $i++;
             }
 
+            
             $this->tableColumns = $this->transformParams($this->tableColumns);
         }
 

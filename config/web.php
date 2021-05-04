@@ -13,8 +13,9 @@ $config = [
         ],
         'urlManager' => [
             'rules' => [
-                [ 'pattern' => '/', 'method' => 'DELETE', 'route' => 'site/index', 'defaults' => ['code' => 'login']],
-                [ 'pattern' => '/login', 'method' => 'GET', 'route' => 'login/login', 'defaults' => ['code' => 'login']],
+                [ 'pattern' => '/', 'method' => 'GET', 'route' => 'site/index', 'defaults' => ['code' => 'home']],
+                [ 'pattern' => '/login', 'method' => 'POST', 'route' => 'login/login', 'defaults' => ['code' => 'login']],
+                [ 'pattern' => '/register', 'method' => 'POST', 'route' => 'login/register', 'defaults' => ['code' => 'register']],
             ],
         ]
     ]
