@@ -24,6 +24,19 @@
             echo json_encode($users);
         }
 
+        public function actionGetfoods() {
+
+            $foods = Application::$db->query("SELECT * FROM foods");
+
+            echo json_encode($foods);
+        }
+
+        public function actionGetmenu() {
+            $menu = Application::$db->query("SELECT * FROM foods f INNER JOIN menu m WHERE m.food_id = f.id");
+
+            echo json_encode($menu);
+        }
+
     }
 
 

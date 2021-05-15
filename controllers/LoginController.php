@@ -18,7 +18,7 @@ class LoginController extends Controller {
         $login = new Login([null, $username, $password]);
 
         if( $login->verify() ) {
-            $login->response_ok();
+            $login->loginSuccess();
         }
         else {
             $login->response_not_ok();

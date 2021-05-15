@@ -10,12 +10,13 @@
 
         private $response_ok;
         private $response_not_ok;
+        private $loginSuccess;
 
 
 
         public function my_construct() {
-            $this->response_ok = json_encode(['response' => true]);
-            $this->response_not_ok = json_encode(['response' => false]);
+            $this->response_ok = json_encode(['response' => "true"]);
+            $this->response_not_ok = json_encode(['response' => "false"]);
 
             $this->tableColumns['password'] = "'".password_hash($this->password, PASSWORD_DEFAULT)."'";
         }
@@ -27,6 +28,11 @@
 
         public function response_not_ok() {
             echo $this->response_not_ok;
+            die();
+        }
+
+        public function loginSuccess() {
+            echo $this->loginSuccess;
             die();
         }
         
@@ -50,6 +56,10 @@
                 $db_password = $user['password'];
 
                 if( password_verify($this->password, $db_password) ) {
+                    $this->loginSuccess = json_encode([
+                        'response' => "true",
+                        'user_id' => $user['id'],
+                    ]);
                     return true;
                 }
                 else {

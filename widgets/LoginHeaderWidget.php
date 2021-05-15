@@ -4,14 +4,14 @@
 
     use App\core\base\Widget;
 
-    class HelloWidget extends Widget {
+    class LoginHeaderWidget extends Widget {
 
 
         public $data = [];
 
         public function run() {
 
-            $this->render('hello', ['data' => $this->data]);
+            $this->render('login-header', ['data' => $this->data]);
         }
 
 

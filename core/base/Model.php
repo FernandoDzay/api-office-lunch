@@ -53,7 +53,13 @@
             $transformedParams = [];
 
             foreach($params as $key => $param) {
-                if(is_string($param)) {
+                if($param === "DEFAULT") {
+                    $transformedParams[$key] = "DEFAULT";
+                }
+                elseif($param === "default") {
+                    $transformedParams[$key] = "DEFAULT";
+                }
+                elseif(is_string($param)) {
                     $transformedParams[$key] = "'".$param."'";
                 }
                 elseif($param === null) {
@@ -69,11 +75,23 @@
 
         public function transformParam($param) {
 
-            if(is_string($param)) {
+            if($param === "DEFAULT") {
+                $transformedParam = "DEFAULT";
+            }
+            elseif($param === "default") {
+                $transformedParam = "DEFAULT";
+            }
+            elseif(is_string($param)) {
                 $transformedParam = "'".$param."'";
             }
             elseif($param === null) {
                 $transformedParam = "null";
+            }
+            elseif($param === "DEFAULT") {
+                $transformedParam = "DEFAULT";
+            }
+            elseif($param === "default") {
+                $transformedParam = "DEFAULT";
             }
             else {
                 $transformedParam = $param;
