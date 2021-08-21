@@ -5,7 +5,7 @@
     use App\core\base\Model;
     use App\core\Application;
 
-    class Food extends Model {
+    class UsersGroup extends Model {
 
 
         private $response_ok;
@@ -18,12 +18,10 @@
             $this->response_ok = json_encode(['response' => "true"]);
             $this->response_not_ok = json_encode(['response' => "false"]);
         }
-
         public function response_ok() {
             echo $this->response_ok;
             die();
         }
-
         public function response_not_ok() {
             http_response_code ( 404 );
             echo $this->response_not_ok;
@@ -31,43 +29,42 @@
         }
 
 
-        public function getFoodByName($name) {
-            $food = Application::$db->row("SELECT * FROM foods WHERE food=:food", ['food' => $name]);
-            return $food;
+
+        public function updateUserGroup($user_id, $group_id) {
+            Application::$db->execute("UPDATE users_group SET group_id=$group_id WHERE user_id=$user_id");
         }
 
-        public function getDiscountPriceByName($name) {
-            $food = Application::$db->row("SELECT discount_price FROM foods WHERE food=:food", ['food' => $name]);
-            return $food['discount_price'];
+        public function activateUserStatus($user_id) {
+            Application::$db->execute("UPDATE users_group SET status=1 WHERE user_id=$user_id");
         }
 
-        public function getActualPriceByName($name) {
-            $food = Application::$db->row("SELECT actual_price FROM foods WHERE food=:food", ['food' => $name]);
-            return $food['actual_price'];
+        public function desActivateUserStatus($user_id) {
+            Application::$db->execute("UPDATE users_group SET status=0 WHERE user_id=$user_id");
         }
+
+        public function removeUserGroup($user_id) {
+            Application::$db->execute("DELETE FROM users_group WHERE user_id=$user_id");
+        }
+
 
     
 
 
         //-------------------------------------------------
         public function setBaseColumn() {
-            return 'id';
+            return 'user_id';
         }
 
         public function setTableName() {
-            return 'foods';
+            return 'users_group';
         }
 
         public function setTableColumns() {
             return [
-                'id',
-                'food',
-                'short_name',
-                'food_image',
-                'is_temporal',
-                'last_update',
-                'discount_price',
-                'actual_price'
+                'user_id',
+                'group_id',
+                'temporal_group_id',
+                'status'
             ];
         }
     }

@@ -42,6 +42,7 @@
 
 
         private function setConfig() {
+            date_default_timezone_set('America/Merida');
             ob_start();
             require __DIR__."/../config/web.php";
             self::$config = $config;

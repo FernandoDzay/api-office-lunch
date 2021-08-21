@@ -5,12 +5,11 @@
     use App\core\base\Model;
     use App\core\Application;
 
-    class Food extends Model {
+    class Extras extends Model {
 
 
         private $response_ok;
         private $response_not_ok;
-        private $loginSuccess;
 
 
 
@@ -30,22 +29,16 @@
             die();
         }
 
-
-        public function getFoodByName($name) {
-            $food = Application::$db->row("SELECT * FROM foods WHERE food=:food", ['food' => $name]);
-            return $food;
+        public function getPriceByName($name) {
+            $food = Application::$db->row("SELECT price FROM extras WHERE extra=:extra", ['extra' => $name]);
+            return $food['price'];
         }
 
-        public function getDiscountPriceByName($name) {
-            $food = Application::$db->row("SELECT discount_price FROM foods WHERE food=:food", ['food' => $name]);
-            return $food['discount_price'];
+        public function getExtras() {
+            $extras = Application::$db->query("SELECT * FROM extras");
+            return $extras;
         }
-
-        public function getActualPriceByName($name) {
-            $food = Application::$db->row("SELECT actual_price FROM foods WHERE food=:food", ['food' => $name]);
-            return $food['actual_price'];
-        }
-
+        
     
 
 
@@ -55,19 +48,14 @@
         }
 
         public function setTableName() {
-            return 'foods';
+            return 'extras';
         }
 
         public function setTableColumns() {
             return [
                 'id',
-                'food',
-                'short_name',
-                'food_image',
-                'is_temporal',
-                'last_update',
-                'discount_price',
-                'actual_price'
+                'extra',
+                'price'
             ];
         }
     }

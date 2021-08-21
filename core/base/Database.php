@@ -40,6 +40,10 @@
             return $stmt->fetch();
         }
 
+        public function lastInsertId() {
+            return $this->db->lastInsertId();
+        }
+
 
 
 

@@ -18,7 +18,10 @@
             $this->response_ok = json_encode(['response' => "true"]);
             $this->response_not_ok = json_encode(['response' => "false"]);
 
-            $this->tableColumns['password'] = "'".password_hash($this->password, PASSWORD_DEFAULT)."'";
+            if(isset($this->password) && isset($this->token)) {
+                $this->tableColumns['password'] = "'".password_hash($this->password, PASSWORD_DEFAULT)."'";
+                $this->tableColumns['token'] = "'".password_hash($this->token, PASSWORD_DEFAULT)."'";
+            }
         }
 
         public function response_ok() {
@@ -48,14 +51,14 @@
             }
         }
 
-        public function verify() {
+        public function verify($username, $password) {
 
-            $user = Application::$db->row("SELECT * from users WHERE username=:username", ['username' => $this->username]);
+            $user = Application::$db->row("SELECT * from users WHERE username=:username", ['username' => $username]);
 
             if( !empty($user) ) {
                 $db_password = $user['password'];
 
-                if( password_verify($this->password, $db_password) ) {
+                if( password_verify($password, $db_password) ) {
                     $this->loginSuccess = json_encode([
                         'response' => "true",
                         'user_id' => $user['id'],
@@ -69,6 +72,35 @@
             else {
                 return false;
             }
+        }
+
+        public function verifyToken($id, $token) {
+
+            $user = Application::$db->row("SELECT * from users WHERE id=:id", ['id' => $id]);
+
+            if( !empty($user) ) {
+
+                $db_token = $user['token'];
+
+                if( password_verify($token, $db_token) ) {
+                    $this->loginSuccess = json_encode([
+                        'response' => "true",
+                        'user_id' => $user['id'],
+                    ]);
+                    return true;
+                }
+
+            }
+            else {
+                return false;
+            }
+
+        }
+
+        public function updateUserToken($username, $token) {
+            $new_token = password_hash($token, PASSWORD_DEFAULT);
+
+            Application::$db->execute("UPDATE users SET token=:new_token WHERE username=:username", ['username' => $username, 'new_token' => $new_token]);
         }
 
 
@@ -90,7 +122,13 @@
             return [
                 'id',
                 'username',
-                'password'
+                'password',
+                'token',
+                'birth_month',
+                'birth_day',
+                'is_guest',
+                'is_admin',
+                'status'
             ];
         }
     }
