@@ -3,6 +3,8 @@
 
     namespace App\GlobalFunctions;
 
+    use App\core\Application;
+
 
     class GlobalFunctions {
 
@@ -51,6 +53,84 @@
             $day = $week[$day_number_of_week];
 
             return $day;
+        }
+
+        public function uploadImage($folder_name, $image_name) {
+
+            if( empty($_FILES) ) return false;
+
+            $dir =  __DIR__ . "/../public/img/food_images/" . $folder_name;
+
+            if( !is_dir($dir) ) {
+                mkdir($dir);
+            }
+
+            $uploaded_file = $_FILES['image']['tmp_name'];
+
+            $destination_name = $dir . "/" . $image_name;
+
+            $result = move_uploaded_file($uploaded_file, $destination_name);
+
+            if($result) {
+                //return "/" . $folder_name . "/" . $image_name;
+                return "http://local.api-office-lunch/img/food_images/" . $folder_name . "/" . $image_name;
+            }
+            else {
+                return false;
+            }
+        }
+
+        public function generateToken() {
+            $random_bytes = random_bytes(16);
+            $token = bin2hex($random_bytes);
+            return $token;
+        }
+
+        public function isImage($mime_type) {
+
+            $array = ['image/png', 'image/jpeg', 'image/webp'];
+
+            if( in_array($mime_type, $array) ) return true;
+            else return false;
+        }
+
+        public function getImagePathArray($id) {
+
+            $food = Application::$db->row("SELECT * FROM foods WHERE id=:id", ['id' => $id]);
+            
+            $food_image = $food['food_image'];
+
+            $array = explode("/", $food_image);
+
+            $folder_name = $array[ sizeof($array) - 2 ];
+            $image_name = $array[ sizeof($array) - 1 ];
+
+            $image_path_array = [
+                'folder_name' => $folder_name,
+                'image_name' => $image_name
+            ];
+
+            return $image_path_array;
+        }
+
+        public function deleteImage($folder_name, $image_name) {
+
+            $dir =  __DIR__ . "/../public/img/food_images/" . $folder_name;
+
+            if( !is_dir($dir) ) {
+                return false;
+            }
+            if( !file_exists($dir . "/" . $image_name) ) {
+                return false;
+            }
+
+            unlink( $dir . "/" . $image_name );
+
+            if( sizeof(scandir($dir)) < 3 ) {
+                rmdir($dir);
+            }
+
+            return true;
         }
 
     }

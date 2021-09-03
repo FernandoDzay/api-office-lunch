@@ -14,7 +14,7 @@
 
         public function actionInsertfood() {
 
-            if(isset($_REQUEST['food'])) {
+            if(isset($_REQUEST['food']) && $_REQUEST['food'] != '') {
                 $food = $_REQUEST['food'];
             }
             else {
@@ -29,8 +29,20 @@
                 $short_name = null;
             }
 
-            if(isset($_REQUEST['food_image'])) {
-                $food_image = $_REQUEST['food_image'];
+            if(isset($_FILES['image'])) {
+                
+                $mime_type = $_FILES['image']['type'];
+
+                if( Application::$app->GlobalFunctions->isImage($mime_type) ) {
+
+                    $image_name = $_FILES['image']['name'];
+                    $folder_name = Application::$app->GlobalFunctions->generateToken();
+
+                    $result = Application::$app->GlobalFunctions->uploadImage($folder_name, $image_name);
+
+                    if($result) $food_image = $result;
+                    else $food_image = "DEFAULT";
+                }
             }
             else {
                 $food_image = "DEFAULT";
@@ -155,37 +167,49 @@
         }
 
         public function actionEditfood() {
+
             if(!isset($_REQUEST['id'])) {
                 http_response_code ( 404 );
                 die();
             }
 
-            if($food['food_image'] == "") {
-                $food = [
-                    'id' => $_REQUEST['id'],
-                    'short_name' => $_REQUEST['short_name'],
-                    'is_temporal' => $_REQUEST['is_temporal'],
-                    'food' => $_REQUEST['food'],
-                ];
+            $food = [
+                'id' => $_REQUEST['id'],
+                'short_name' => $_REQUEST['short_name'],
+                'is_temporal' => $_REQUEST['is_temporal'],
+                'food' => $_REQUEST['food'],
+            ];
+
+            if( isset($_FILES['image']) ) {
+                
+                $mime_type = $_FILES['image']['type'];
+
+                if( Application::$app->GlobalFunctions->isImage($mime_type) ) {
+
+                    $image_name = $_FILES['image']['name'];
+                    $image_path_array = Application::$app->GlobalFunctions->getImagePathArray( $food['id'] );
+                    $folder_name = $image_path_array['folder_name'];
+
+                    if($folder_name == "food_images") {
+                        $folder_name = Application::$app->GlobalFunctions->generateToken();
+                    }
+
+                    $result = Application::$app->GlobalFunctions->uploadImage($folder_name, $image_name);
+
+                    if($result) $food['food_image'] = $result;
+                }
             }
-            else {
-                $food = [
-                    'id' => $_REQUEST['id'],
-                    'food_image' => $_REQUEST['food_image'],
-                    'short_name' => $_REQUEST['short_name'],
-                    'is_temporal' => $_REQUEST['is_temporal'],
-                    'food' => $_REQUEST['food'],
-                ];
-            }
+
 
             $previous_food = Application::$db->row("SELECT * FROM foods WHERE id=:id", ['id' => $food['id']]);
             
             Application::$db->execute("UPDATE orders SET order_=:new_order WHERE order_=:previous_order AND date=:date", ['new_order' => $food['food'], 'previous_order' => $previous_food['food'], 'date' => date('Y-m-d')]);
 
-            if($food['food_image'] == "") {
+            if( !isset($food['food_image']) ) {
                 Application::$db->execute("UPDATE foods SET food=:food, short_name=:short_name, is_temporal=:is_temporal WHERE id=:id", $food);
             }
             else {
+                Application::$app->GlobalFunctions->deleteImage($folder_name, $image_path_array['image_name']);
                 Application::$db->execute("UPDATE foods SET food=:food, food_image=:food_image, short_name=:short_name, is_temporal=:is_temporal WHERE id=:id", $food);
             }
 

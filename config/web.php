@@ -47,7 +47,7 @@ $config = [
 
 
                 // PUT
-                [ 'pattern' => '/edit-food', 'method' => 'PUT', 'route' => 'admin/editfood'],
+                [ 'pattern' => '/edit-food', 'method' => 'POST', 'route' => 'admin/editfood'],
                 [ 'pattern' => '/make-food-permanent', 'method' => 'PUT', 'route' => 'admin/makepermanent'],
                 [ 'pattern' => '/edit-extra', 'method' => 'PUT', 'route' => 'admin/editextra'],
                 [ 'pattern' => '/update-user-group', 'method' => 'PUT', 'route' => 'groups/updateusergroup'],
@@ -69,6 +69,9 @@ $config = [
 
                 // CRON
                 [ 'pattern' => '/cron', 'method' => 'GET', 'route' => 'site/cron'],
+
+                // UPLOAD IMAGE
+                [ 'pattern' => '/upload-image', 'method' => 'POST', 'route' => 'site/uploadimage'],
 
 
             ],

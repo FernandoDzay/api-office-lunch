@@ -85,6 +85,24 @@
 
         }
 
+        public function actionUploadimage() {
+
+            if( !isset($_FILES['image']) ) return;
+            $image_name = $_FILES['image']['name'];
+            $folder_name = Application::$app->GlobalFunctions->generateToken();
+
+
+            $result = Application::$app->GlobalFunctions->uploadImage($folder_name, $image_name);
+
+            if($result) {
+                echo $result;
+            }
+            else {
+                echo "no subido";
+            }
+
+        }
+
     }
 
 
