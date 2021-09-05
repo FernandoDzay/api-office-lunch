@@ -37,8 +37,9 @@
 
                     $image_name = $_FILES['image']['name'];
                     $folder_name = Application::$app->GlobalFunctions->generateToken();
+                    $rel_dir = "food_images/" . $folder_name;
 
-                    $result = Application::$app->GlobalFunctions->uploadImage($folder_name, $image_name);
+                    $result = Application::$app->GlobalFunctions->uploadImage($rel_dir, $image_name);
 
                     if($result) $food_image = $result;
                     else $food_image = "DEFAULT";
@@ -136,16 +137,33 @@
                 die();
             }
 
+            $image_path_array = Application::$app->GlobalFunctions->getImagePathArray($food_id);
+
+            echo "<pre>";
+            print_r($image_path_array);
+            die();
+
             
-            $order = Application::$db->row("SELECT food FROM foods WHERE id=$food_id");
-            $order = $order['food'];
+            $food = Application::$db->row("SELECT food FROM foods WHERE id=$food_id");
+            $order = $food['food'];
             $date = date('Y-m-d');
 
             Application::$db->execute("DELETE FROM orders WHERE order_='$order' and date='$date'");
 
-            $food = new Food();
+            $image_path_array = Application::$app->GlobalFunctions->getImagePathArray($food_id);
 
-            $food->delete($food_id);
+            $folder_name = $image_path_array['folder_name'];
+            $image_name = $image_path_array['image_name'];
+
+            $rel_dir = "food_images/" . $folder_name;
+
+            if($image_name != "default_image.jpg") {
+                Application::$app->GlobalFunctions->deleteImage($rel_dir, $image_name);
+            }
+
+            $food_obj = new Food();
+
+            $food_obj->delete($food_id);
 
             die();
         }
@@ -194,7 +212,9 @@
                         $folder_name = Application::$app->GlobalFunctions->generateToken();
                     }
 
-                    $result = Application::$app->GlobalFunctions->uploadImage($folder_name, $image_name);
+                    $rel_dir = "food_images/" . $folder_name;
+
+                    $result = Application::$app->GlobalFunctions->uploadImage($rel_dir, $image_name);
 
                     if($result) $food['food_image'] = $result;
                 }

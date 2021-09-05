@@ -55,11 +55,11 @@
             return $day;
         }
 
-        public function uploadImage($folder_name, $image_name) {
+        public function uploadImage($rel_dir, $image_name) {
 
             if( empty($_FILES) ) return false;
 
-            $dir =  __DIR__ . "/../public/img/food_images/" . $folder_name;
+            $dir =  __DIR__ . "/../public/img/" . $rel_dir;
 
             if( !is_dir($dir) ) {
                 mkdir($dir);
@@ -72,8 +72,7 @@
             $result = move_uploaded_file($uploaded_file, $destination_name);
 
             if($result) {
-                //return "/" . $folder_name . "/" . $image_name;
-                return "http://local.api-office-lunch/img/food_images/" . $folder_name . "/" . $image_name;
+                return "http://local.api-office-lunch/img/" . $rel_dir . "/" . $image_name;
             }
             else {
                 return false;
@@ -113,9 +112,9 @@
             return $image_path_array;
         }
 
-        public function deleteImage($folder_name, $image_name) {
+        public function deleteImage($rel_dir, $image_name) {
 
-            $dir =  __DIR__ . "/../public/img/food_images/" . $folder_name;
+            $dir =  __DIR__ . "/../public/img/" . $rel_dir;
 
             if( !is_dir($dir) ) {
                 return false;

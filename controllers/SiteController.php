@@ -85,14 +85,15 @@
 
         }
 
-        public function actionUploadimage() {
+        public function actionUploadfoodimage() {
 
             if( !isset($_FILES['image']) ) return;
             $image_name = $_FILES['image']['name'];
             $folder_name = Application::$app->GlobalFunctions->generateToken();
+            $rel_dir = "food_images/" . $folder_name;
 
 
-            $result = Application::$app->GlobalFunctions->uploadImage($folder_name, $image_name);
+            $result = Application::$app->GlobalFunctions->uploadImage($rel_dir, $image_name);
 
             if($result) {
                 echo $result;
