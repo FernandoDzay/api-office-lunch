@@ -69,6 +69,44 @@
             echo json_encode($users);
         }
 
+        public function actionChangeimage() {
+
+            $response = ['status' => false];
+
+            if( isset($_FILES['image']) && isset($_REQUEST['user_id']) ) {
+                
+                $mime_type = $_FILES['image']['type'];
+
+                if( Application::$app->GlobalFunctions->isImage($mime_type) ) {
+
+                    $image_name = $_FILES['image']['name'];
+                    $image_path_array = Application::$app->GlobalFunctions->getUserImagePathArray( $_REQUEST['user_id'] );
+                    $folder_name = $image_path_array['folder_name'];
+                    $rel_dir = "users/" . $folder_name;
+
+                    if($folder_name == "default") {
+                        $folder_name = Application::$app->GlobalFunctions->generateToken();
+                        $rel_dir = "users/" . $folder_name;
+                    }
+                    else {
+                        Application::$app->GlobalFunctions->deleteImage($rel_dir, $image_path_array['image_name']);
+                    }
+
+                    $result = Application::$app->GlobalFunctions->uploadImage($rel_dir, $image_name);
+
+                    if($result) {
+                        Application::$db->execute("UPDATE users SET image=:image WHERE id=:id", ['image' => $result, 'id' => $_REQUEST['user_id']]);
+                        $response['status'] = true;
+                        $response['src'] = $result;
+                    }
+                }
+            }
+
+
+            echo json_encode($response);
+            return;
+        }
+
 
 
 

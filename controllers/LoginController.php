@@ -35,7 +35,7 @@ class LoginController extends Controller {
         $birth_day = $_REQUEST['birth_day'];
 
     
-        $register = new Login([null, $username, $password, $password, $birth_month, $birth_day, "DEFAULT", "DEFAULT", "DEFAULT"]);
+        $register = new Login([null, $username, $password, $password, "DEFAULT", $birth_month, $birth_day, "DEFAULT", "DEFAULT", "DEFAULT"]);
 
         if( $register->userExist() === false ) {
             $register->save();

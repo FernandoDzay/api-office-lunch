@@ -44,6 +44,7 @@ $config = [
                 [ 'pattern' => '/orders/add', 'method' => 'POST', 'route' => 'orders/add'],
                 [ 'pattern' => '/set-user-group', 'method' => 'POST', 'route' => 'groups/setusergroup'],
                 [ 'pattern' => '/send-notification', 'method' => 'POST', 'route' => 'notifications/send'],
+                [ 'pattern' => '/change-user-image', 'method' => 'POST', 'route' => 'site/changeimage'],
 
 
                 // PUT

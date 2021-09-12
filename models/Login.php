@@ -124,6 +124,7 @@
                 'username',
                 'password',
                 'token',
+                'image',
                 'birth_month',
                 'birth_day',
                 'is_guest',

@@ -112,6 +112,25 @@
             return $image_path_array;
         }
 
+        public function getUserImagePathArray($id) {
+
+            $user = Application::$db->row("SELECT * FROM users WHERE id=:id", ['id' => $id]);
+            
+            $user_image = $user['image'];
+
+            $array = explode("/", $food_image);
+
+            $folder_name = $array[ sizeof($array) - 2 ];
+            $image_name = $array[ sizeof($array) - 1 ];
+
+            $image_path_array = [
+                'folder_name' => $folder_name,
+                'image_name' => $image_name
+            ];
+
+            return $image_path_array;
+        }
+
         public function deleteImage($rel_dir, $image_name) {
 
             $dir =  __DIR__ . "/../public/img/" . $rel_dir;
