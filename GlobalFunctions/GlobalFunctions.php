@@ -72,7 +72,7 @@
             $result = move_uploaded_file($uploaded_file, $destination_name);
 
             if($result) {
-                return "http://local.api-office-lunch/img/" . $rel_dir . "/" . $image_name;
+                return "/img/" . $rel_dir . "/" . $image_name;
             }
             else {
                 return false;
@@ -118,7 +118,7 @@
             
             $user_image = $user['image'];
 
-            $array = explode("/", $food_image);
+            $array = explode("/", $user_image);
 
             $folder_name = $array[ sizeof($array) - 2 ];
             $image_name = $array[ sizeof($array) - 1 ];

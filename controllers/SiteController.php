@@ -55,13 +55,13 @@
 
         }
 
-        public function actionGetusername() {
+        public function actionGetuser() {
 
             $user_id = $_REQUEST['user_id'];
 
-            $user = Application::$db->row("SELECT username FROM users WHERE id=:id", ['id' => $user_id]);
+            $user = Application::$db->row("SELECT * FROM users WHERE id=:id", ['id' => $user_id]);
 
-            echo json_encode($user['username']);
+            echo json_encode($user);
         }
 
         public function actionGetusers() {
@@ -84,9 +84,10 @@
                     $folder_name = $image_path_array['folder_name'];
                     $rel_dir = "users/" . $folder_name;
 
+
                     if($folder_name == "default") {
                         $folder_name = Application::$app->GlobalFunctions->generateToken();
-                        $rel_dir = "users/" . $folder_name;
+                        $rel_dir = 'users' . "/" . $folder_name;
                     }
                     else {
                         Application::$app->GlobalFunctions->deleteImage($rel_dir, $image_path_array['image_name']);

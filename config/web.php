@@ -18,7 +18,7 @@ $config = [
                 [ 'pattern' => '/', 'method' => 'GET', 'route' => 'site/index'],
                 [ 'pattern' => '/get-foods', 'method' => 'GET', 'route' => 'site/getfoods'],
                 [ 'pattern' => '/menu', 'method' => 'GET', 'route' => 'site/getmenu'],
-                [ 'pattern' => '/get-username', 'method' => 'GET', 'route' => 'site/getusername'],
+                [ 'pattern' => '/get-user', 'method' => 'GET', 'route' => 'site/getuser'],
                 [ 'pattern' => '/orders/get-by-user', 'method' => 'GET', 'route' => 'orders/getbyuser'],
                 [ 'pattern' => '/get-extras', 'method' => 'GET', 'route' => 'site/getextras'],
                 [ 'pattern' => '/get-users', 'method' => 'GET', 'route' => 'site/getusers'],
