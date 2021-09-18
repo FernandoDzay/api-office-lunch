@@ -14,6 +14,8 @@
 
         public function actionInsertfood() {
 
+            $current_timestamp_ = date('Y-m-d');
+
             if(isset($_REQUEST['food']) && $_REQUEST['food'] != '') {
                 $food = $_REQUEST['food'];
             }
@@ -57,7 +59,7 @@
             }
             
 
-            $food = new Food([null, $food, $short_name, $food_image, $is_temporal, "DEFAULT", "DEFAULT", "DEFAULT"]);
+            $food = new Food([null, $food, $short_name, $food_image, $is_temporal, $current_timestamp_, "DEFAULT", "DEFAULT"]);
 
             $food->save();
             $food->response_ok();
@@ -83,6 +85,8 @@
 
         public function actionSavefood() {
 
+            $current_timestamp_ = date('Y-m-d');
+
             if(isset($_REQUEST['food'])) {
                 $food = $_REQUEST['food'];
             }
@@ -106,7 +110,7 @@
             }
             
 
-            $food = new Food([null, $food, $short_name, $food_image, 0, "DEFAULT", "DEFAULT", "DEFAULT"]);
+            $food = new Food([null, $food, $short_name, $food_image, 0, $current_timestamp_, "DEFAULT", "DEFAULT"]);
 
             $food->save();
             $food->response_ok();

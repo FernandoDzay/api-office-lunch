@@ -13,7 +13,8 @@
 
 
         public function actionAdd() {
-            
+
+            $current_timestamp_ = date('Y-m-d');
             $user_id = $_REQUEST['user_id'];
             
             
@@ -64,7 +65,7 @@
             }
 
             
-            $order = new Orders([null, $user_id, $order, "DEFAULT", "DEFAULT", $price, $price_no_discount, $is_extra]);
+            $order = new Orders([null, $user_id, $order, "DEFAULT", $current_timestamp_, $price, $price_no_discount, $is_extra]);
 
             $order->save();
 

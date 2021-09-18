@@ -20,43 +20,49 @@
 
         public function send($users) {
 
+            $current_timestamp_ = date('Y-m-d h:i:s');
+
             if( isset($this->created_by) && isset($this->type) ) {
 
-                $notification_insertion = "INSERT INTO notifications VALUES (DEFAULT, :title, :description, :created_by, :type, DEFAULT) ";
+                $notification_insertion = "INSERT INTO notifications VALUES (DEFAULT, :title, :description, :created_by, :type, :current_timestamp_) ";
                 Application::$db->execute($notification_insertion, [
                     ':title' => $this->title,
                     ':description' => $this->description,
                     ':created_by' => $this->created_by,
                     ':type' => $this->type,
+                    ':current_timestamp_' => $current_timestamp_
                 ]);
 
             }
             else if( isset($this->created_by) ) {
 
-                $notification_insertion = "INSERT INTO notifications VALUES (DEFAULT, :title, :description, :created_by, DEFAULT, DEFAULT) ";
+                $notification_insertion = "INSERT INTO notifications VALUES (DEFAULT, :title, :description, :created_by, DEFAULT, :current_timestamp_) ";
                 Application::$db->execute($notification_insertion, [
                     ':title' => $this->title,
                     ':description' => $this->description,
-                    ':created_by' => $this->created_by
+                    ':created_by' => $this->created_by,
+                    ':current_timestamp_' => $current_timestamp_
                 ]);
 
             }
             else if( isset($this->type) ) {
 
-                $notification_insertion = "INSERT INTO notifications VALUES (DEFAULT, :title, :description, DEFAULT, :type, DEFAULT) ";
+                $notification_insertion = "INSERT INTO notifications VALUES (DEFAULT, :title, :description, DEFAULT, :type, :current_timestamp_) ";
                 Application::$db->execute($notification_insertion, [
                     ':title' => $this->title,
                     ':description' => $this->description,
-                    ':type' => $this->type
+                    ':type' => $this->type,
+                    ':current_timestamp_' => $current_timestamp_
                 ]);
 
             }
             else {
 
-                $notification_insertion = "INSERT INTO notifications VALUES (DEFAULT, :title, :description, DEFAULT, DEFAULT, DEFAULT) ";
+                $notification_insertion = "INSERT INTO notifications VALUES (DEFAULT, :title, :description, DEFAULT, DEFAULT, :current_timestamp_) ";
                 Application::$db->execute($notification_insertion, [
                     ':title' => $this->title,
-                    ':description' => $this->description
+                    ':description' => $this->description,
+                    ':current_timestamp_' => $current_timestamp_
                 ]);
 
             }
@@ -65,7 +71,7 @@
 
             $user_insertions = "";
             foreach($users as $key => $user_id) {
-                $user_insertions .= "INSERT INTO assigned_notifications VALUES (DEFAULT, $notification_id, ?, DEFAULT, DEFAULT); ";
+                $user_insertions .= "INSERT INTO assigned_notifications VALUES (DEFAULT, $notification_id, ?, DEFAULT, '$current_timestamp_'); ";
             }
 
             Application::$db->execute($user_insertions, $users);
