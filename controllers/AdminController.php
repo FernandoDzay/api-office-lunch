@@ -138,11 +138,6 @@
             }
 
             $image_path_array = Application::$app->GlobalFunctions->getImagePathArray($food_id);
-
-            echo "<pre>";
-            print_r($image_path_array);
-            die();
-
             
             $food = Application::$db->row("SELECT food FROM foods WHERE id=$food_id");
             $order = $food['food'];
