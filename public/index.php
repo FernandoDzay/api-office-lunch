@@ -1,5 +1,8 @@
 <?php
-    ini_set('display_errors', 1);
+
+    die("esta es una pruieba");
+
+    /* ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
@@ -11,7 +14,7 @@
 
     $application = new Application();
  
-    $application->run();
+    $application->run(); */
 
 
 ?>
