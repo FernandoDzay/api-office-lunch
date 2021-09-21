@@ -113,15 +113,18 @@
 
 
         public function actionCron() {
-            header('Content-Type: text/html');
+            //header('Content-Type: text/html');
 
-            $cron = new Cron();
+            $notification = new Notification("prueba", "esta es una prueba de cron");
+
+            $notification->sendAll();
+
+            /* $cron = new Cron();
 
             $cron->notificateBirthDay();
 
 
-            $cron->printMessages();
-
+            $cron->printMessages(); */
         }
 
         public function actionUploadfoodimage() {
