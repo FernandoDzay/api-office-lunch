@@ -69,7 +69,7 @@ $config = [
 
 
                 // CRON
-                [ 'pattern' => '/cron', 'method' => 'GET', 'route' => 'site/cron'],
+                [ 'pattern' => '/cron', 'method' => 'POST', 'route' => 'site/cron'],
 
                 // UPLOAD IMAGE
                 [ 'pattern' => '/upload-food-image', 'method' => 'POST', 'route' => 'site/uploadfoodimage'],
