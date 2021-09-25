@@ -4,10 +4,10 @@
 
     if($env === "prod") {
         $db = [
-            'dbname' => 'sql5438232',
+            'dbname' => 'sql5439971',
             'host' => 'sql5.freesqldatabase.com',
-            'user' => 'sql5438232',
-            'password' => 'fC1wzMbDbC',
+            'user' => 'sql5439971',
+            'password' => 'NKrZfNgAps',
         ];
     }
     else {
