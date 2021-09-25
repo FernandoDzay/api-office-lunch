@@ -46,6 +46,16 @@
             return $food['actual_price'];
         }
 
+        public function deleteNoSavedFoods() {
+            $query = 
+            "
+                DELETE FROM foods WHERE is_temporal = 1;
+            ";
+
+            $result = Application::$db->execute($query);
+            return $result;
+        }
+
     
 
 

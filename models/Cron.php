@@ -46,13 +46,29 @@
 
         }
 
-        public function printMessages() {
-            echo "<pre>";
-            print_r($this->messages);
-            echo "</pre>";
+        public function groupsClockWise() {
+            $usersGroup = new UsersGroup();
+            $usersGroup->groupsClockWise();
+            $this->messages['groupsClockWise'] = 'Grupos actualizados';
         }
 
+        public function deleteNoSavedFoods() {
+            $food = new Food();
+            $food->deleteNoSavedFoods();
+            $this->messages['foods'] = 'Las comidas no guardadas, han sido borradas';
+        }
 
+        
+
+
+
+
+
+
+
+        public function responseMessages() {
+            echo json_encode($this->messages);
+        }
 
 
         // -------------------------------------------- PRIVATE
@@ -60,6 +76,8 @@
         private function initializeMessages() {
             $this->messages = [
                 'birthdays' => '',
+                'groupsClockWise' => '',
+                'foods' => '',
             ];
         }
 

@@ -7,6 +7,7 @@
     use App\core\http\REST;
     use App\models\Food;
     use App\models\Extras;
+    use App\models\Settings;
 
 
     class AdminController extends Controller {
@@ -276,6 +277,22 @@
 
         }
 
+        public function actionSettings() {
+            $settings = Settings::getSettings();
+            echo json_encode($settings);
+        }
+
+        public function actionUpdatesettings() {
+            if( isset($_REQUEST['save']) ) {
+                if( Settings::isGroupsRotate() != $_REQUEST['groups_rotate'] ) {
+                    Settings::updateGroupsRotate($_REQUEST['groups_rotate']);
+                }
+
+                if( Settings::isMenuActivated() != $_REQUEST['menu_activated'] ) {
+                    Settings::updateMenuActivated($_REQUEST['menu_activated']);
+                }
+            }
+        }
 
     }
 

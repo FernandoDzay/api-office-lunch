@@ -31,6 +31,7 @@ $config = [
                 [ 'pattern' => '/make-order', 'method' => 'GET', 'route' => 'orders/makeorder'],
                 [ 'pattern' => '/get-notifications', 'method' => 'GET', 'route' => 'notifications/get'],
                 [ 'pattern' => '/get-lunch-hour', 'method' => 'GET', 'route' => 'groups/getlunchhour'],
+                [ 'pattern' => '/settings', 'method' => 'GET', 'route' => 'admin/settings'],
 
 
                 // POST
@@ -55,6 +56,7 @@ $config = [
                 [ 'pattern' => '/activate-user-group', 'method' => 'PUT', 'route' => 'groups/activateuserstatus'],
                 [ 'pattern' => '/desactivate-user-group', 'method' => 'PUT', 'route' => 'groups/desactivateuserstatus'],
                 [ 'pattern' => '/update-notifications', 'method' => 'PUT', 'route' => 'notifications/update'],
+                [ 'pattern' => '/update-settings', 'method' => 'PUT', 'route' => 'admin/updatesettings'],
                 
 
 

@@ -46,6 +46,17 @@
             Application::$db->execute("DELETE FROM users_group WHERE user_id=$user_id");
         }
 
+        public function groupsClockWise() {
+            $query = 
+            "
+                UPDATE users_group SET group_id = (group_id + 1) WHERE group_id > 0 AND group_id < 5;
+                UPDATE users_group SET group_id = 1 WHERE group_id = 5
+            ";
+
+            $result = Application::$db->execute($query);
+            return $result;
+        }
+
 
     
 

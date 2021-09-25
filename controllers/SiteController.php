@@ -113,17 +113,23 @@
 
 
         public function actionCron() {
-            //header('Content-Type: text/html');
-
-            $notification = new Notification("prueba", "esta es una prueba de cron");
-
-            $notification->sendAll();
 
             /* $cron = new Cron();
 
             $cron->notificateBirthDay();
+            $cron->groupsClockWise();
+            $cron->deleteNoSavedFoods();
 
 
+            $cron->responseMessages(); */
+
+
+
+
+            $notification = new Notification("prueba", "esta es una prueba de cron");
+            $notification->sendAll();
+            /* $cron = new Cron();
+            $cron->notificateBirthDay();
             $cron->printMessages(); */
         }
 
