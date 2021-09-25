@@ -58,7 +58,14 @@
             $this->messages['foods'] = 'Las comidas no guardadas, han sido borradas';
         }
 
-        
+        public function resetMenu() {
+            $sql = "DELETE FROM menu";
+
+            Application::$db->execute($sql);
+            $this->messages['menu'] = 'El menu ha sido reseteado';
+        }
+
+
 
 
 
@@ -78,6 +85,7 @@
                 'birthdays' => '',
                 'groupsClockWise' => '',
                 'foods' => '',
+                'menu' => '',
             ];
         }
 

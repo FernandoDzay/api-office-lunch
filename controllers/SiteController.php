@@ -114,23 +114,18 @@
 
         public function actionCron() {
 
-            /* $cron = new Cron();
+            $cron = new Cron();
+            $notification = new Notification("prueba", "esta es una prueba de cron");
 
             $cron->notificateBirthDay();
             $cron->groupsClockWise();
             $cron->deleteNoSavedFoods();
+            $cron->resetMenu();
 
-
-            $cron->responseMessages(); */
-
-
-
-
-            $notification = new Notification("prueba", "esta es una prueba de cron");
+            
             $notification->sendAll();
-            /* $cron = new Cron();
-            $cron->notificateBirthDay();
-            $cron->printMessages(); */
+
+            $cron->responseMessages();
         }
 
         public function actionUploadfoodimage() {
